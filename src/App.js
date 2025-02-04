@@ -62,51 +62,112 @@ export default function App() {
   };
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-xl font-bold">Document Change Notice (DCN)</h1>
-      
-      <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded-md shadow">
-        <input type="text" name="documentName" placeholder="Document Name" value={form.documentName} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="text" name="currentRevision" placeholder="Current Revision" value={form.currentRevision} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <label className="block font-semibold">Document Type</label>
-        <select name="documentType" value={form.documentType} onChange={handleChange} className="w-full p-2 border rounded" required>
-          <option value="Internal">Internal</option>
-          <option value="External">External</option>
-          <option value="Legal">Legal</option>
-        </select>
-        <input type="text" name="reasonForChange" placeholder="Reason for Change" value={form.reasonForChange} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <textarea name="descriptionOfChange" placeholder="Description of Change" value={form.descriptionOfChange} onChange={handleChange} className="w-full p-2 border rounded" required></textarea>
-        <input type="text" name="requestedBy" placeholder="Requested By" value={form.requestedBy} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="date" name="date" value={form.date} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">Submit DCN</button>
-      </form>
+    <div className="min-h-screen bg-gray-100">
+      {/* Header */}
+      <header className="bg-blue-600 text-white p-4 shadow-md fixed w-full">
+        <h1 className="text-2xl font-bold">Document Change Notice (DCN) Application</h1>
+      </header>
 
-      <h2 className="text-lg font-semibold mt-6">Submitted DCNs</h2>
-      <ul className="mt-4 space-y-2">
-        {dcns.map((dcn, index) => (
-          <li key={index} className="p-4 border rounded-md">
-            <p><strong>Document:</strong> {dcn.documentName}</p>
-            <p><strong>Revision:</strong> {dcn.currentRevision}</p>
-            <p><strong>Type:</strong> {dcn.documentType}</p>
-            <p><strong>Reason:</strong> {dcn.reasonForChange}</p>
-            <p><strong>Status:</strong> {dcn.status}</p>
-            <p><strong>Impact:</strong> {dcn.impact.join(", ")}</p>
-            <p><strong>Departments Affected:</strong> {dcn.departmentAffected.join(", ")}</p>
-            <p><strong>Change Processed Date:</strong> {dcn.changeProcessedDate}</p>
-            <p><strong>Change Communicated:</strong> {dcn.changeCommunicated}</p>
-            <p><strong>Change Complete By:</strong> {dcn.changeCompleteBy}</p>
-            <select name="status" value={dcn.status} onChange={(e) => {
-              const updatedDcns = [...dcns];
-              updatedDcns[index].status = e.target.value;
-              setDcns(updatedDcns);
-            }} className="p-2 border rounded">
-              <option value="Pending">Pending</option>
-              <option value="Accepted">Accepted</option>
-              <option value="Rejected">Rejected</option>
-            </select>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+      {/* Main Content */}
+      <main className="pt-20 p-4 max-w-4xl mx-auto">
+        {/* DCN Form */}
+        <section className="bg-white p-6 rounded-lg shadow-md mb-6">
+          <h2 className="text-xl font-semibold mb-4">Submit a New DCN</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block font-medium">Document Name</label>
+              <input
+                type="text"
+                name="documentName"
+                value={form.documentName}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium">Current Revision</label>
+              <input
+                type="text"
+                name="currentRevision"
+                value={form.currentRevision}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium">Document Type</label>
+              <select
+                name="documentType"
+                value={form.documentType}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                required
+              >
+                <option value="Internal">Internal</option>
+                <option value="External">External</option>
+                <option value="Legal">Legal</option>
+              </select>
+            </div>
+            <div>
+              <label className="block font-medium">Reason for Change</label>
+              <input
+                type="text"
+                name="reasonForChange"
+                value={form.reasonForChange}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium">Description of Change</label>
+              <textarea
+                name="descriptionOfChange"
+                value={form.descriptionOfChange}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                required
+              ></textarea>
+            </div>
+            <div>
+              <label className="block font-medium">Requested By</label>
+              <input
+                type="text"
+                name="requestedBy"
+                value={form.requestedBy}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium">Date</label>
+              <input
+                type="date"
+                name="date"
+                value={form.date}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition duration-200"
+            >
+              Submit DCN
+            </button>
+          </form>
+        </section>
+
+        {/* Submitted DCNs List */}
+        <section>
+          <h2 className="text-xl font-semibold mb-4">Submitted DCNs</h2>
+          <ul className="space-y-4">
+            {dcns.map((dcn, index) => (
+              <li key={index} className="bg-white p-6 rounded-lg shadow-md">
+
+::contentReference[oaicite:0]{index=0}
+ 
