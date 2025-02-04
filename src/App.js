@@ -168,6 +168,16 @@ export default function App() {
           <ul className="space-y-4">
             {dcns.map((dcn, index) => (
               <li key={index} className="bg-white p-6 rounded-lg shadow-md">
-
-::contentReference[oaicite:0]{index=0}
- 
+                <p><strong>Document:</strong> {dcn.documentName}</p>
+                <p><strong>Revision:</strong> {dcn.currentRevision}</p>
+                <p><strong>Type:</strong> {dcn.documentType}</p>
+                <p><strong>Reason:</strong> {dcn.reasonForChange}</p>
+                <p><strong>Status:</strong> {dcn.status}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
+    </div>
+  );
+}
