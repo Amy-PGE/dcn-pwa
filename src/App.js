@@ -50,7 +50,7 @@ const handleSubmit = (e) => {
   setDcns([...dcns, newDcn]);
 
   // Send to Google Sheets
-  fetch("YOUR_WEBHOOK_URL", {
+  fetch("https://script.google.com/a/macros/powerglide.co.nz/s/AKfycbx8rO_mdPxu6Mg__J6lDJjVEbbQaGT82h0UhtGbEwlayW16IARRoXdt6axPrPFWFkDp/exec", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newDcn),
