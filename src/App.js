@@ -41,25 +41,41 @@ export default function App() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setDcns([...dcns, form]);
-    setForm({
-      documentName: "",
-      currentRevision: "",
-      documentType: "Internal",
-      reasonForChange: "",
-      descriptionOfChange: "",
-      requestedBy: "",
-      date: "",
-      status: "Pending",
-      impact: [],
-      departmentAffected: [],
-      changeProcessedDate: "",
-      changeCommunicated: "",
-      changeCompleteBy: ""
-    });
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const newDcn = { ...form };
+
+  // Save in Local Storage
+  setDcns([...dcns, newDcn]);
+
+  // Send to Google Sheets
+  fetch("YOUR_WEBHOOK_URL", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newDcn),
+  })
+  .then(response => response.text())
+  .then(data => console.log("Google Sheets Response:", data))
+  .catch(error => console.error("Error sending to Google Sheets:", error));
+
+  // Reset Form
+  setForm({
+    documentName: "",
+    currentRevision: "",
+    documentType: "Internal",
+    reasonForChange: "",
+    descriptionOfChange: "",
+    requestedBy: "",
+    date: "",
+    status: "Pending",
+    impact: [],
+    departmentAffected: [],
+    changeProcessedDate: "",
+    changeCommunicated: "",
+    changeCompleteBy: ""
+  });
+};
 
   return (
     <div className="min-h-screen bg-gray-100">
