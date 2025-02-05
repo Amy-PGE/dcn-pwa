@@ -15,18 +15,25 @@ export default async function handler(req, res) {
       body: JSON.stringify(dcnData),
     });
 
-    const textResponse = await response.text();
+    const textResponse = await response.text(); // Read full response as text
 
+    console.log("Google Apps Script Raw Response:", textResponse); // Debugging log
+
+    if (!response.ok) {
+      return res.status(500).json({ error: "Google Apps Script request failed", details: textResponse });
+    }
+
+    // Try parsing as JSON
     try {
       const jsonResponse = JSON.parse(textResponse);
       return res.status(200).json(jsonResponse);
     } catch (error) {
-      console.error("Google Apps Script returned invalid JSON:", textResponse);
+      console.error("Invalid JSON from Google Apps Script:", textResponse);
       return res.status(500).json({ error: "Invalid JSON response from Google Apps Script", details: textResponse });
     }
 
   } catch (error) {
     console.error("Error communicating with Google Apps Script:", error);
-    return res.status(500).json({ error: "Failed to fetch data from Google Apps Script" });
+    return res.status(500).json({ error: "Failed to fetch data from Google Apps Script", details: error.toString() });
   }
 }
