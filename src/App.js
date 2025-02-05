@@ -50,7 +50,7 @@ const handleSubmit = (e) => {
   setDcns([...dcns, newDcn]);
 
   // Send to Google Sheets
-  fetch("https://script.google.com/a/macros/powerglide.co.nz/s/AKfycbyrAIcujlzkCtTQ2ULMih72QBduEe3cjJ8_NYhaWf8kuYhuWBWHU8AZNzB-NXckbWsx/exec", {
+  fetch("https://script.google.com/a/macros/powerglide.co.nz/s/AKfycbz8exb9hyak86zKfoA5R2xSCYxYFuVgqhfxTfhnsaRYzEvgK1qEpL9lgh114lrxQqLp/exec", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newDcn),
