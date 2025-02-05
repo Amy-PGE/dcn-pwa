@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   try {
     // Send data to Google Apps Script
-    const response = await fetch("https://script.google.com/macros/s/AKfycbzCfUY8fIiOMYOQxsoA_vf-8gEeS_Yue4GiF5OTDtYKVZu42XjI_n0shr29g-8ahpB8/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbzHRGNCY9zGvZ6kQsDrUxwLTsdlnWDJoktBZOdkiRE5svoZ8l-GIvZBvLm5CLPdEXzM/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dcnData),
