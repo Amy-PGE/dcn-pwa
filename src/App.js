@@ -49,15 +49,15 @@ const handleSubmit = (e) => {
   // Save in Local Storage
   setDcns([...dcns, newDcn]);
 
-  // Send to Google Sheets
-  fetch("https://script.google.com/a/macros/powerglide.co.nz/s/AKfycbz8exb9hyak86zKfoA5R2xSCYxYFuVgqhfxTfhnsaRYzEvgK1qEpL9lgh114lrxQqLp/exec", {
+  // Send request to Vercel API (NOT directly to Google Apps Script)
+  fetch("/api/submitDcn", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newDcn),
   })
-  .then(response => response.text())
-  .then(data => console.log("Google Sheets Response:", data))
-  .catch(error => console.error("Error sending to Google Sheets:", error));
+  .then(response => response.json())
+  .then(data => console.log("Vercel API Response:", data))
+  .catch(error => console.error("Error sending to API:", error));
 
   // Reset Form
   setForm({
