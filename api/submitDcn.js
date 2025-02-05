@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   dcnData.apiKey = API_SECRET;  // Attach API key to request
 
   // Send data to Google Apps Script
-  const response = await fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+  const response = await fetch("https://script.google.com/macros/s/AKfycbzCfUY8fIiOMYOQxsoA_vf-8gEeS_Yue4GiF5OTDtYKVZu42XjI_n0shr29g-8ahpB8/exec", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dcnData),
