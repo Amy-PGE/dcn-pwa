@@ -43,18 +43,21 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDcns([...dcns, form]);
+    const newDcns = [...dcns, form];
+    setDcns(newDcns);
+    localStorage.setItem("dcns", JSON.stringify(newDcns));
+
+    // Send to Google Sheets
+    fetch("https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_ID/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    })
+      .then(response => response.text())
+      .then(data => console.log("Google Sheets Response:", data))
+      .catch(error => console.error("Error sending to Google Sheets:", error));
+
     setView("home");
-  };
-
-  const handleComplete = () => {
-    setDcns(dcns.filter((dcn) => dcn !== selectedDcn));
-    setView("complete");
-  };
-
-  const handleReject = () => {
-    setDcns(dcns.filter((dcn) => dcn !== selectedDcn));
-    setView("complete");
   };
 
   return (
@@ -101,6 +104,20 @@ export default function App() {
             <input type="date" name="date" value={form.date} onChange={handleChange} className="w-full p-2 border rounded" required />
             <button type="submit" className="w-full py-2 bg-[#C41230] text-white font-semibold rounded">Submit DCN</button>
           </form>
+        </div>
+      )}
+
+      {view === "review" && (
+        <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
+          <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">Back</button>
+          <h2 className="text-xl font-semibold mb-4">Review a Current DCN</h2>
+          <ul>
+            {dcns.map((dcn, index) => (
+              <li key={index} className="p-4 border rounded cursor-pointer hover:bg-gray-100">
+                {dcn.documentName} - {dcn.currentRevision}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
