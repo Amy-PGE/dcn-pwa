@@ -2,11 +2,12 @@
   "name": "dcn-pwa",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-scripts": "5.0.1"
-  },
+    "next": "latest"
+  }
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
