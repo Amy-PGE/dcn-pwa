@@ -9,28 +9,20 @@ export default async function handler(req, res) {
 
   try {
     // Send data to Google Apps Script
-    const response = await fetch("https://script.google.com/macros/s/AKfycbzHRGNCY9zGvZ6kQsDrUxwLTsdlnWDJoktBZOdkiRE5svoZ8l-GIvZBvLm5CLPdEXzM/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwPvO9PKUFi1quO7PvXe4-POREwhp1D0MU7Js5GtUsvzLjsGp_OwuBI4UNS011W9KfJrg/exec", { // Replace this!
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dcnData),
     });
 
-    const textResponse = await response.text(); // Read full response as text
-
-    console.log("Google Apps Script Raw Response:", textResponse); // Debugging log
+    const textResponse = await response.text();
+    console.log("Google Apps Script Response:", textResponse); // Debugging
 
     if (!response.ok) {
       return res.status(500).json({ error: "Google Apps Script request failed", details: textResponse });
     }
 
-    // Try parsing as JSON
-    try {
-      const jsonResponse = JSON.parse(textResponse);
-      return res.status(200).json(jsonResponse);
-    } catch (error) {
-      console.error("Invalid JSON from Google Apps Script:", textResponse);
-      return res.status(500).json({ error: "Invalid JSON response from Google Apps Script", details: textResponse });
-    }
+    return res.status(200).json(JSON.parse(textResponse));
 
   } catch (error) {
     console.error("Error communicating with Google Apps Script:", error);
