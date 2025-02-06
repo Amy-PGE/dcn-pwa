@@ -51,20 +51,21 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-black p-4">
-            <header className="bg-[#C41230] text-white p-4 shadow-md fixed w-full flex items-center">
+      <header className="bg-[#C41230] text-white p-4 shadow-md fixed w-full flex items-center">
         <img src="/logo.jpg" alt="Company Logo" className="h-10 ml-4" />
         <div className="flex-1 text-center">
           <h1 className="text-2xl font-bold">Document Change Notice (DCN)</h1>
         </div>
       </header>
 
-
-      {view !== "home" && (
-        <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mt-16">Back</button>
-      )}
-
       {view === "home" && (
-        <div className="pt-20 flex flex-col items-center gap-4">
+        <div className="pt-20 flex flex-col items-center gap-4 text-center">
+          <p className="text-[#848688] font-normal text-lg max-w-2xl">
+            A DCN should be raised for any modification that impacts the content or process
+            described in a document. **Minor spelling/grammar changes do not require a DCN.**
+            If a change affects workflows, compliance, automation, or any dependent process,
+            it must go through the DCN process.
+          </p>
           <button onClick={() => setView("submit")} className="px-6 py-3 bg-[#C41230] text-white font-bold rounded">Submit a New DCN</button>
           <button onClick={() => setView("review")} className="px-6 py-3 bg-[#C41230] text-white font-bold rounded">Review a Current DCN</button>
           <button onClick={() => setView("complete")} className="px-6 py-3 bg-[#C41230] text-white font-bold rounded">View Completed DCNs</button>
