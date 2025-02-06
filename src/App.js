@@ -51,10 +51,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-black p-4">
-      <header className="bg-[#C41230] text-white p-4 shadow-md fixed w-full flex items-center justify-center">
-  <img src="/logo.jpg" alt="Company Logo" className="h-10 mr-4" />
-  <h1 className="text-2xl font-bold">Document Change Notice (DCN)</h1>
-</header>
+            <header className="bg-[#C41230] text-white p-4 shadow-md fixed w-full flex items-center">
+        <img src="/logo.jpg" alt="Company Logo" className="h-10 ml-4" />
+        <div className="flex-1 text-center">
+          <h1 className="text-2xl font-bold">Document Change Notice (DCN)</h1>
+        </div>
+      </header>
 
 
       {view !== "home" && (
