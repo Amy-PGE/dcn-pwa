@@ -49,24 +49,21 @@ export default function App() {
     setView("home");
   };
 
-  const handleComplete = (index) => {
-    const completedDcn = { ...dcns[index], status: "Completed" };
-    setDcns(dcns.filter((_, i) => i !== index));
-    setDcns((prev) => [...prev, completedDcn]);
-    setView("home");
-  };
-
   return (
-    <div className="min-h-screen bg-[#C41230] text-white p-4">
+    <div className="min-h-screen bg-white text-black p-4">
       <header className="bg-[#C41230] text-white p-4 shadow-md fixed w-full">
         <h1 className="text-2xl font-bold">Document Change Notice (DCN) Application</h1>
       </header>
 
+      {view !== "home" && (
+        <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mt-16">Back</button>
+      )}
+
       {view === "home" && (
         <div className="pt-20 flex flex-col items-center gap-4">
-          <button onClick={() => setView("submit")} className="px-6 py-3 bg-white text-[#C41230] font-bold rounded">Submit a New DCN</button>
-          <button onClick={() => setView("review")} className="px-6 py-3 bg-white text-[#C41230] font-bold rounded">Review a Current DCN</button>
-          <button onClick={() => setView("complete")} className="px-6 py-3 bg-white text-[#C41230] font-bold rounded">View Completed DCNs</button>
+          <button onClick={() => setView("submit")} className="px-6 py-3 bg-[#C41230] text-white font-bold rounded">Submit a New DCN</button>
+          <button onClick={() => setView("review")} className="px-6 py-3 bg-[#C41230] text-white font-bold rounded">Review a Current DCN</button>
+          <button onClick={() => setView("complete")} className="px-6 py-3 bg-[#C41230] text-white font-bold rounded">View Completed DCNs</button>
         </div>
       )}
 
