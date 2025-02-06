@@ -1,4 +1,3 @@
-// Force redeploy: Updated timestamp: 2025-02-06
 import { useState, useEffect } from "react";
 
 export default function App() {
