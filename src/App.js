@@ -84,40 +84,28 @@ export default function App() {
         </div>
       )}
 
-      {view === "submit" && (
-        <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
-          <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">Back</button>
-          <h2 className="text-xl font-semibold mb-4">Submit a New DCN</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input type="text" name="documentName" placeholder="Document Name" value={form.documentName} onChange={handleChange} className="w-full p-2 border rounded" required />
-            <input type="text" name="currentRevision" placeholder="Current Revision" value={form.currentRevision} onChange={handleChange} className="w-full p-2 border rounded" required />
-            <label className="block font-semibold">Document Type</label>
-            <select name="documentType" value={form.documentType} onChange={handleChange} className="w-full p-2 border rounded" required>
-              <option value="">Select One</option>
-              <option value="Internal">Internal</option>
-              <option value="External">External</option>
-              <option value="Legal">Legal</option>
-            </select>
-            <input type="text" name="reasonForChange" placeholder="Reason for Change" value={form.reasonForChange} onChange={handleChange} className="w-full p-2 border rounded" required />
-            <textarea name="descriptionOfChange" placeholder="Description of Change" value={form.descriptionOfChange} onChange={handleChange} className="w-full p-2 border rounded" required></textarea>
-            <input type="text" name="requestedBy" placeholder="Requested By" value={form.requestedBy} onChange={handleChange} className="w-full p-2 border rounded" required />
-            <input type="date" name="date" value={form.date} onChange={handleChange} className="w-full p-2 border rounded" required />
-            <button type="submit" className="w-full py-2 bg-[#C41230] text-white font-semibold rounded">Submit DCN</button>
-          </form>
-        </div>
-      )}
-
       {view === "review" && (
         <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
           <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">Back</button>
           <h2 className="text-xl font-semibold mb-4">Review a Current DCN</h2>
           <ul>
             {dcns.map((dcn, index) => (
-              <li key={index} className="p-4 border rounded cursor-pointer hover:bg-gray-100">
+              <li key={index} className="p-4 border rounded cursor-pointer hover:bg-gray-100" onClick={() => setSelectedDcn(dcn)}>
                 {dcn.documentName} - {dcn.currentRevision}
               </li>
             ))}
           </ul>
+          {selectedDcn && (
+            <div className="mt-6 p-4 border rounded">
+              <h3 className="text-lg font-semibold">{selectedDcn.documentName}</h3>
+              <p><strong>Current Revision:</strong> {selectedDcn.currentRevision}</p>
+              <p><strong>Reason for Change:</strong> {selectedDcn.reasonForChange}</p>
+              <p><strong>Description:</strong> {selectedDcn.descriptionOfChange}</p>
+              <p><strong>Requested By:</strong> {selectedDcn.requestedBy}</p>
+              <p><strong>Date:</strong> {selectedDcn.date}</p>
+              <button onClick={() => setSelectedDcn(null)} className="mt-4 px-4 py-2 bg-gray-600 text-white font-bold rounded">Close</button>
+            </div>
+          )}
         </div>
       )}
     </div>
