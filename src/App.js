@@ -75,6 +75,7 @@ export default function App() {
 
       {view === "submit" && (
         <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
+          <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">Back</button>
           <h2 className="text-xl font-semibold mb-4">Submit a New DCN</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input type="text" name="documentName" placeholder="Document Name" value={form.documentName} onChange={handleChange} className="w-full p-2 border rounded" required />
