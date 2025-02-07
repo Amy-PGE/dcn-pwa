@@ -163,27 +163,33 @@ fetch("/api/submitDcn", {
   ))}
 </div>
 
-              
-              <label className="block font-semibold mt-4">Department Affected</label>
-              <select name="departmentAffected" multiple value={selectedDcn.departmentAffected} onChange={handleChange} className="w-full p-2 border rounded">
-                <option value="Sales">Sales</option>
-                <option value="Design">Design</option>
-                <option value="Accounts">Accounts</option>
-                <option value="Purchasing">Purchasing</option>
-                <option value="Production">Production</option>
-                <option value="Field Operations">Field Operations</option>
-                <option value="Service">Service</option>
-                <option value="Customer">Customer</option>
-              </select>
-              
-              <label className="block font-semibold mt-4">Change Processed Date</label>
-              <input type="date" name="changeProcessedDate" value={selectedDcn.changeProcessedDate} onChange={handleChange} className="w-full p-2 border rounded" />
-              
-              <label className="block font-semibold mt-4">Change Complete By</label>
-              <input type="text" name="changeCompleteBy" value={selectedDcn.changeCompleteBy} onChange={handleChange} className="w-full p-2 border rounded" />
-              
-              <button onClick={() => setSelectedDcn(null)} className="mt-4 px-4 py-2 bg-gray-600 text-white font-bold rounded">Close</button>
-            </div>
+<label className="block font-semibold mt-4">Department Affected</label>
+<div className="grid grid-cols-2 gap-2">
+  {["Sales", "Accounts", "Design", "Purchasing", "Production", "Field Operations", "Service", "Customer"].map((departmentOption) => (
+    <label key={departmentOption} className="flex items-center">
+      <input
+        type="checkbox"
+        name="departmentAffected"
+        value={departmentOption}
+        checked={selectedDcn?.departmentAffected?.includes(departmentOption) || false}
+        onChange={(e) => {
+          setSelectedDcn((prev) => {
+            if (!prev) return prev; // Prevent errors if state is null
+            return {
+              ...prev,
+              departmentAffected: e.target.checked
+                ? [...(prev.departmentAffected || []), departmentOption] // Add if checked
+                : (prev.departmentAffected || []).filter((item) => item !== departmentOption), // Remove if unchecked
+            };
+          });
+        }}
+        className="mr-2"
+      />
+      {departmentOption}
+    </label>
+  ))}
+</div>
+
           )}
         </div>
       )}
