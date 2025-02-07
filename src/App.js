@@ -136,14 +136,29 @@ fetch("/api/submitDcn", {
               <p><strong>Requested By:</strong> {selectedDcn.requestedBy}</p>
               <p><strong>Date:</strong> {selectedDcn.date}</p>
               
-              <label className="block font-semibold mt-4">Impact</label>
-              <select name="impact" multiple value={selectedDcn.impact} onChange={handleChange} className="w-full p-2 border rounded">
-                <option value="Automations">Automations</option>
-                <option value="Process Change">Process Change</option>
-                <option value="SOP">SOP</option>
-                <option value="Comms Links">Comms Links</option>
-                <option value="Upload to Platform">Upload to Platform</option>
-              </select>
+<label className="block font-semibold mt-4">Impact</label>
+<div className="grid grid-cols-2 gap-2">
+  {["Automations", "Process Change", "SOP", "Comms Links", "Upload to Platform"].map((impactOption) => (
+    <label key={impactOption} className="flex items-center">
+      <input
+        type="checkbox"
+        name="impact"
+        value={impactOption}
+        checked={selectedDcn.impact.includes(impactOption)}
+        onChange={(e) => {
+          setForm((prev) => ({
+            ...prev,
+            impact: e.target.checked
+              ? [...prev.impact, impactOption] // Add if checked
+              : prev.impact.filter((item) => item !== impactOption), // Remove if unchecked
+          }));
+        }}
+        className="mr-2"
+      />
+      {impactOption}
+    </label>
+  ))}
+</div>
               
               <label className="block font-semibold mt-4">Department Affected</label>
               <select name="departmentAffected" multiple value={selectedDcn.departmentAffected} onChange={handleChange} className="w-full p-2 border rounded">
