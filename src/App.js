@@ -47,12 +47,11 @@ export default function App() {
     setDcns(newDcns);
     localStorage.setItem("dcns", JSON.stringify(newDcns));
 
-    // Send to Google Sheets
-    fetch("https://script.google.com/macros/s/AKfycbwPvO9PKUFi1quO7PvXe4-POREwhp1D0MU7Js5GtUsvzLjsGp_OwuBI4UNS011W9KfJrg/exec/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    })
+fetch("/api/submitDcn", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(form),
+})
       .then(response => response.text())
       .then(data => console.log("Google Sheets Response:", data))
       .catch(error => console.error("Error sending to Google Sheets:", error));
