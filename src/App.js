@@ -163,6 +163,7 @@ fetch("/api/submitDcn", {
   ))}
 </div>
 
+              
 <label className="block font-semibold mt-4">Department Affected</label>
 <div className="grid grid-cols-2 gap-2">
   {["Sales", "Accounts", "Design", "Purchasing", "Production", "Field Operations", "Service", "Customer"].map((departmentOption) => (
@@ -188,9 +189,6 @@ fetch("/api/submitDcn", {
       {departmentOption}
     </label>
   ))}
-</div>
-
-          )}
         </div>
       )}
     </div>
