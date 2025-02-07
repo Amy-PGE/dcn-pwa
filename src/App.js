@@ -48,7 +48,7 @@ export default function App() {
     localStorage.setItem("dcns", JSON.stringify(newDcns));
 
     // Send to Google Sheets
-    fetch("https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_ID/exec", {
+    fetch("https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbwPvO9PKUFi1quO7PvXe4-POREwhp1D0MU7Js5GtUsvzLjsGp_OwuBI4UNS011W9KfJrg/exec/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
