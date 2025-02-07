@@ -18,7 +18,7 @@ export default function App() {
     changeProcessedDate: "",
     changeCommunicated: false,
     changeCompleteBy: ""
-  }); // ✅ Removed extra closing bracket here
+  });
 
   useEffect(() => {
     const storedDcns = JSON.parse(localStorage.getItem("dcns")) || [];
@@ -40,6 +40,16 @@ export default function App() {
       setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
+  
+const handleCheckboxChange = (e, field) => {
+  const { value, checked } = e.target;
+  setSelectedDcn((prev) => ({
+    ...prev,
+    [field]: checked
+      ? [...prev[field], value]
+      : prev[field].filter((item) => item !== value),
+  }));
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -116,7 +126,7 @@ fetch("/api/submitDcn", {
         </div>
       )}
 
-     {view === "review" && (
+    {view === "review" && (
   <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
     <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">
       Back
