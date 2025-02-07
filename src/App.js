@@ -18,7 +18,7 @@ export default function App() {
     changeProcessedDate: "",
     changeCommunicated: false,
     changeCompleteBy: ""
-  });
+  }); // ✅ Removed extra closing bracket here
 
   useEffect(() => {
     const storedDcns = JSON.parse(localStorage.getItem("dcns")) || [];
@@ -30,27 +30,16 @@ export default function App() {
   }, [dcns]);
 
   const handleChange = (e) => {
-  const { name, value, type, checked } = e.target;
-  if (type === "checkbox") {
-    setSelectedDcn((prev) => ({
-      ...prev,
-      [name]: checked,
-    }));
-  } else {
-    setSelectedDcn((prev) => ({ ...prev, [name]: value }));
-  }
-};
-
-const handleCheckboxChange = (e, field) => {
-  const { value, checked } = e.target;
-  setSelectedDcn((prev) => ({
-    ...prev,
-    [field]: checked
-      ? [...(prev[field] || []), value] // Ensure an array exists before spreading
-      : (prev[field] || []).filter((item) => item !== value),
-  }));
-};
-
+    const { name, value, type, checked } = e.target;
+    if (type === "checkbox") {
+      setForm((prev) => ({
+        ...prev,
+        [name]: checked,
+      }));
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -127,116 +116,58 @@ fetch("/api/submitDcn", {
         </div>
       )}
 
-   {view === "review" && (
-  <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
-    <button
-      onClick={() => setView("home")}
-      className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4"
-    >
-      Back
-    </button>
-    <h2 className="text-xl font-semibold mb-4">Review a Current DCN</h2>
-    <ul>
-      {dcns.map((dcn, index) => (
-        <li
-          key={index}
-          className="p-4 border rounded cursor-pointer hover:bg-gray-100"
-          onClick={() => setSelectedDcn({ ...dcn })}
-        >
-          {dcn.documentName} - {dcn.currentRevision}
-        </li>
-      ))}
-    </ul>
-
-    {selectedDcn && (
-      <div className="mt-6 p-4 border rounded">
-        <h3 className="text-lg font-semibold">{selectedDcn.documentName}</h3>
-        <p><strong>Current Revision:</strong> {selectedDcn.currentRevision}</p>
-        <p><strong>Reason for Change:</strong> {selectedDcn.reasonForChange}</p>
-        <p><strong>Description:</strong> {selectedDcn.descriptionOfChange}</p>
-        <p><strong>Requested By:</strong> {selectedDcn.requestedBy}</p>
-        <p><strong>Date:</strong> {selectedDcn.date}</p>
-
-        {/* Impact Checkboxes */}
-        <label className="block font-semibold mt-4">Impact</label>
-        <div className="grid grid-cols-2 gap-2">
-          {["Automations", "Process Change", "SOP", "Comms Links", "Upload to Platform"].map((impact) => (
-            <label key={impact} className="flex items-center">
-              <input
-                type="checkbox"
-                name="impact"
-                value={impact}
-                checked={selectedDcn.impact.includes(impact)}
-                onChange={(e) => handleCheckboxChange(e, "impact")}
-                className="mr-2"
-              />
-              {impact}
-            </label>
-          ))}
+     {view === "review" && (
+        <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
+          <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">Back</button>
+          <h2 className="text-xl font-semibold mb-4">Review a Current DCN</h2>
+          <ul>
+            {dcns.map((dcn, index) => (
+              <li key={index} className="p-4 border rounded cursor-pointer hover:bg-gray-100" onClick={() => setSelectedDcn(dcn)}>
+                {dcn.documentName} - {dcn.currentRevision}
+              </li>
+            ))}
+          </ul>
+          {selectedDcn && (
+            <div className="mt-6 p-4 border rounded">
+              <h3 className="text-lg font-semibold">{selectedDcn.documentName}</h3>
+              <p><strong>Current Revision:</strong> {selectedDcn.currentRevision}</p>
+              <p><strong>Reason for Change:</strong> {selectedDcn.reasonForChange}</p>
+              <p><strong>Description:</strong> {selectedDcn.descriptionOfChange}</p>
+              <p><strong>Requested By:</strong> {selectedDcn.requestedBy}</p>
+              <p><strong>Date:</strong> {selectedDcn.date}</p>
+              
+              <label className="block font-semibold mt-4">Impact</label>
+              <select name="impact" multiple value={selectedDcn.impact} onChange={handleChange} className="w-full p-2 border rounded">
+                <option value="Automations">Automations</option>
+                <option value="Process Change">Process Change</option>
+                <option value="SOP">SOP</option>
+                <option value="Comms Links">Comms Links</option>
+                <option value="Upload to Platform">Upload to Platform</option>
+              </select>
+              
+              <label className="block font-semibold mt-4">Department Affected</label>
+              <select name="departmentAffected" multiple value={selectedDcn.departmentAffected} onChange={handleChange} className="w-full p-2 border rounded">
+                <option value="Sales">Sales</option>
+                <option value="Design">Design</option>
+                <option value="Accounts">Accounts</option>
+                <option value="Purchasing">Purchasing</option>
+                <option value="Production">Production</option>
+                <option value="Field Operations">Field Operations</option>
+                <option value="Service">Service</option>
+                <option value="Customer">Customer</option>
+              </select>
+              
+              <label className="block font-semibold mt-4">Change Processed Date</label>
+              <input type="date" name="changeProcessedDate" value={selectedDcn.changeProcessedDate} onChange={handleChange} className="w-full p-2 border rounded" />
+              
+              <label className="block font-semibold mt-4">Change Complete By</label>
+              <input type="text" name="changeCompleteBy" value={selectedDcn.changeCompleteBy} onChange={handleChange} className="w-full p-2 border rounded" />
+              
+              <button onClick={() => setSelectedDcn(null)} className="mt-4 px-4 py-2 bg-gray-600 text-white font-bold rounded">Close</button>
+            </div>
+          )}
         </div>
-
-        {/* Department Affected Checkboxes */}
-        <label className="block font-semibold mt-4">Department Affected</label>
-        <div className="grid grid-cols-2 gap-2">
-          {[
-            "Sales",
-            "Design",
-            "Accounts",
-            "Purchasing",
-            "Production",
-            "Field Operations",
-            "Service",
-            "Customer",
-          ].map((department) => (
-            <label key={department} className="flex items-center">
-              <input
-                type="checkbox"
-                name="departmentAffected"
-                value={department}
-                checked={selectedDcn.departmentAffected.includes(department)}
-                onChange={(e) => handleCheckboxChange(e, "departmentAffected")}
-                className="mr-2"
-              />
-              {department}
-            </label>
-          ))}
-        </div>
-
-        {/* Additional Fields */}
-        <label className="block font-semibold mt-4">Change Processed Date</label>
-        <input
-          type="date"
-          name="changeProcessedDate"
-          value={selectedDcn.changeProcessedDate || ""}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-
-<label className="block font-semibold mt-4">Change Complete By</label>
-<input
-  type="text"
-  name="changeCompleteBy"
-  value={selectedDcn?.changeCompleteBy || ""}
-  onChange={handleChange}
-  className="w-full p-2 border rounded"
-/>
-
-<div className="mt-4 flex gap-4">
-  <button
-    onClick={() => console.log("Complete DCN:", selectedDcn)}
-    className="px-6 py-3 bg-green-600 text-white font-bold rounded"
-  >
-    Complete DCN
-  </button>
-  <button
-    onClick={() => console.log("Reject DCN:", selectedDcn)}
-    className="px-6 py-3 bg-red-600 text-white font-bold rounded"
-  >
-    Reject DCN
-  </button>
-</div>
-
-      </div>
-    )}
-  </div>
-)}
+      )}
+    </div>
+  );
+}
