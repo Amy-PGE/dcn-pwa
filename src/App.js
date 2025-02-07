@@ -126,7 +126,7 @@ fetch("/api/submitDcn", {
         </div>
       )}
 
-    {view === "review" && (
+   {view === "review" && (
   <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
     <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">
       Back
