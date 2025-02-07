@@ -30,26 +30,27 @@ export default function App() {
   }, [dcns]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    if (type === "checkbox") {
-      setForm((prev) => ({
-        ...prev,
-        [name]: checked,
-      }));
-    } else {
-      setForm((prev) => ({ ...prev, [name]: value }));
-    }
-  };
-  
+  const { name, value, type, checked } = e.target;
+  if (type === "checkbox") {
+    setSelectedDcn((prev) => ({
+      ...prev,
+      [name]: checked,
+    }));
+  } else {
+    setSelectedDcn((prev) => ({ ...prev, [name]: value }));
+  }
+};
+
 const handleCheckboxChange = (e, field) => {
   const { value, checked } = e.target;
   setSelectedDcn((prev) => ({
     ...prev,
     [field]: checked
-      ? [...prev[field], value]
-      : prev[field].filter((item) => item !== value),
+      ? [...(prev[field] || []), value] // Ensure an array exists before spreading
+      : (prev[field] || []).filter((item) => item !== value),
   }));
 };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -128,13 +129,20 @@ fetch("/api/submitDcn", {
 
    {view === "review" && (
   <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
-    <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">
+    <button
+      onClick={() => setView("home")}
+      className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4"
+    >
       Back
     </button>
     <h2 className="text-xl font-semibold mb-4">Review a Current DCN</h2>
     <ul>
       {dcns.map((dcn, index) => (
-        <li key={index} className="p-4 border rounded cursor-pointer hover:bg-gray-100" onClick={() => setSelectedDcn(dcn)}>
+        <li
+          key={index}
+          className="p-4 border rounded cursor-pointer hover:bg-gray-100"
+          onClick={() => setSelectedDcn({ ...dcn })}
+        >
           {dcn.documentName} - {dcn.currentRevision}
         </li>
       ))}
@@ -170,7 +178,16 @@ fetch("/api/submitDcn", {
         {/* Department Affected Checkboxes */}
         <label className="block font-semibold mt-4">Department Affected</label>
         <div className="grid grid-cols-2 gap-2">
-          {["Sales", "Design", "Accounts", "Purchasing", "Production", "Field Operations", "Service", "Customer"].map((department) => (
+          {[
+            "Sales",
+            "Design",
+            "Accounts",
+            "Purchasing",
+            "Production",
+            "Field Operations",
+            "Service",
+            "Customer",
+          ].map((department) => (
             <label key={department} className="flex items-center">
               <input
                 type="checkbox"
@@ -187,14 +204,36 @@ fetch("/api/submitDcn", {
 
         {/* Additional Fields */}
         <label className="block font-semibold mt-4">Change Processed Date</label>
-        <input type="date" name="changeProcessedDate" value={selectedDcn.changeProcessedDate || ""} onChange={handleChange} className="w-full p-2 border rounded" />
+        <input
+          type="date"
+          name="changeProcessedDate"
+          value={selectedDcn.changeProcessedDate || ""}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
 
         <label className="block font-semibold mt-4">Change Complete By</label>
-        <input type="text" name="changeCompleteBy" value={selectedDcn.changeCompleteBy || ""} onChange={handleChange} className="w-full p-2 border rounded" />
+        <input
+          type="text"
+          name="changeCompleteBy"
+          value={selectedDcn.changeCompleteBy || ""}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
 
         <div className="mt-4 flex gap-4">
-          <button onClick={handleComplete} className="px-6 py-3 bg-green-600 text-white font-bold rounded">Complete DCN</button>
-          <button onClick={handleReject} className="px-6 py-3 bg-red-600 text-white font-bold rounded">Reject DCN</button>
+          <button
+            onClick={() => console.log("Complete DCN:", selectedDcn)}
+            className="px-6 py-3 bg-green-600 text-white font-bold rounded"
+          >
+            Complete DCN
+          </button>
+          <button
+            onClick={() => console.log("Reject DCN:", selectedDcn)}
+            className="px-6 py-3 bg-red-600 text-white font-bold rounded"
+          >
+            Reject DCN
+          </button>
         </div>
       </div>
     )}
