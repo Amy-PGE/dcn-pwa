@@ -141,7 +141,5 @@ export default function App() {
         <button onClick={() => setSelectedDcn(null)} className="mt-4 px-4 py-2 bg-gray-600 text-white font-bold rounded">
           Close
         </button>
-      </div>
-    )}
-  </div>
-)}
+        </div>
+      )}
