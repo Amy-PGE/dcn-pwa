@@ -144,14 +144,17 @@ fetch("/api/submitDcn", {
         type="checkbox"
         name="impact"
         value={impactOption}
-        checked={selectedDcn.impact.includes(impactOption)}
+        checked={selectedDcn?.impact?.includes(impactOption) || false}
         onChange={(e) => {
-          setForm((prev) => ({
-            ...prev,
-            impact: e.target.checked
-              ? [...prev.impact, impactOption] // Add if checked
-              : prev.impact.filter((item) => item !== impactOption), // Remove if unchecked
-          }));
+          setSelectedDcn((prev) => {
+            if (!prev) return prev; // Prevent errors if state is null
+            return {
+              ...prev,
+              impact: e.target.checked
+                ? [...(prev.impact || []), impactOption] // Add if checked
+                : (prev.impact || []).filter((item) => item !== impactOption), // Remove if unchecked
+            };
+          });
         }}
         className="mr-2"
       />
@@ -159,6 +162,7 @@ fetch("/api/submitDcn", {
     </label>
   ))}
 </div>
+
               
               <label className="block font-semibold mt-4">Department Affected</label>
               <select name="departmentAffected" multiple value={selectedDcn.departmentAffected} onChange={handleChange} className="w-full p-2 border rounded">
