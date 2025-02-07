@@ -116,11 +116,9 @@ fetch("/api/submitDcn", {
         </div>
       )}
 
-      {view === "review" && (
+     {view === "review" && (
         <div className="pt-20 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md text-black">
-          <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">
-            Back
-          </button>
+          <button onClick={() => setView("home")} className="px-4 py-2 bg-[#C41230] text-white font-bold rounded mb-4">Back</button>
           <h2 className="text-xl font-semibold mb-4">Review a Current DCN</h2>
           <ul>
             {dcns.map((dcn, index) => (
@@ -137,9 +135,35 @@ fetch("/api/submitDcn", {
               <p><strong>Description:</strong> {selectedDcn.descriptionOfChange}</p>
               <p><strong>Requested By:</strong> {selectedDcn.requestedBy}</p>
               <p><strong>Date:</strong> {selectedDcn.date}</p>
-              <button onClick={() => setSelectedDcn(null)} className="mt-4 px-4 py-2 bg-gray-600 text-white font-bold rounded">
-                Close
-              </button>
+              
+              <label className="block font-semibold mt-4">Impact</label>
+              <select name="impact" multiple value={selectedDcn.impact} onChange={handleChange} className="w-full p-2 border rounded">
+                <option value="Automations">Automations</option>
+                <option value="Process Change">Process Change</option>
+                <option value="SOP">SOP</option>
+                <option value="Comms Links">Comms Links</option>
+                <option value="Upload to Platform">Upload to Platform</option>
+              </select>
+              
+              <label className="block font-semibold mt-4">Department Affected</label>
+              <select name="departmentAffected" multiple value={selectedDcn.departmentAffected} onChange={handleChange} className="w-full p-2 border rounded">
+                <option value="Sales">Sales</option>
+                <option value="Design">Design</option>
+                <option value="Accounts">Accounts</option>
+                <option value="Purchasing">Purchasing</option>
+                <option value="Production">Production</option>
+                <option value="Field Operations">Field Operations</option>
+                <option value="Service">Service</option>
+                <option value="Customer">Customer</option>
+              </select>
+              
+              <label className="block font-semibold mt-4">Change Processed Date</label>
+              <input type="date" name="changeProcessedDate" value={selectedDcn.changeProcessedDate} onChange={handleChange} className="w-full p-2 border rounded" />
+              
+              <label className="block font-semibold mt-4">Change Complete By</label>
+              <input type="text" name="changeCompleteBy" value={selectedDcn.changeCompleteBy} onChange={handleChange} className="w-full p-2 border rounded" />
+              
+              <button onClick={() => setSelectedDcn(null)} className="mt-4 px-4 py-2 bg-gray-600 text-white font-bold rounded">Close</button>
             </div>
           )}
         </div>
