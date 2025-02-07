@@ -212,29 +212,30 @@ fetch("/api/submitDcn", {
           className="w-full p-2 border rounded"
         />
 
-        <label className="block font-semibold mt-4">Change Complete By</label>
-        <input
-          type="text"
-          name="changeCompleteBy"
-          value={selectedDcn.changeCompleteBy || ""}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
+<label className="block font-semibold mt-4">Change Complete By</label>
+<input
+  type="text"
+  name="changeCompleteBy"
+  value={selectedDcn?.changeCompleteBy || ""}
+  onChange={handleChange}
+  className="w-full p-2 border rounded"
+/>
 
-        <div className="mt-4 flex gap-4">
-          <button
-            onClick={() => console.log("Complete DCN:", selectedDcn)}
-            className="px-6 py-3 bg-green-600 text-white font-bold rounded"
-          >
-            Complete DCN
-          </button>
-          <button
-            onClick={() => console.log("Reject DCN:", selectedDcn)}
-            className="px-6 py-3 bg-red-600 text-white font-bold rounded"
-          >
-            Reject DCN
-           </button>
-        </div>
+<div className="mt-4 flex gap-4">
+  <button
+    onClick={() => console.log("Complete DCN:", selectedDcn)}
+    className="px-6 py-3 bg-green-600 text-white font-bold rounded"
+  >
+    Complete DCN
+  </button>
+  <button
+    onClick={() => console.log("Reject DCN:", selectedDcn)}
+    className="px-6 py-3 bg-red-600 text-white font-bold rounded"
+  >
+    Reject DCN
+  </button>
+</div>
+
       </div>
     )}
   </div>
